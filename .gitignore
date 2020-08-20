@@ -1,0 +1,12 @@
+Debug
+Release
+x64
+
+# Visual Studio
+# User-specific files
+*.vcxproj.filters
+.vs/
+
+# Windows detritus
+# Windows image file caches
+Thumbs.db
