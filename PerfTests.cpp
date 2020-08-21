@@ -36,7 +36,7 @@ void iterateEnums()
     size_t loops = 125000000;
 
 
-    std::cout << std::endl << "Iterating through all values " << loops << " times using the iterator" << std::endl;
+    std::cout << std::endl << "Iterating through all values " << loops << " times using a for loop." << std::endl;
 
     volatile auto t0 = 0;
     t.reset();
