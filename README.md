@@ -37,9 +37,9 @@ Overloads the arithmetic operators to allow `<OTHER>` to be on the rhs of the ar
 
 `<OTHER>` can be another strong enum, or it could be a type compatible with `<TYPE>`.
 
-## `EnumeratedArray<TYPE, ENUM>` class
+## `EnumeratedArray<TYPE, ENUM>` and `ConstEnumeratedArray<TYPE, ENUM>` class
 
-As defined in [`Enums.hpp`](./Enums.hpp), `EnumeratedArray` is a simple wrapper for a const array that allows you to use a strong enum as well as normal integer indices to access elements in the array.
+As defined in [`Enums.hpp`](./Enums.hpp), these classes are simple wrapper for arrays and const array that allow you to use a strong enum as well as normal integer indices to access elements in the array.
 
 ## Usage
 
@@ -83,7 +83,7 @@ static constexpr const char _LowercaseLetters[] = {
     'a',
     ...
 };
-const EnumeratedArray<char, LowercaseLetterIndex> LowercaseLetters(_LowercaseLetters);
+const ConstEnumeratedArray<char, LowercaseLetterIndex> LowercaseLetters(_LowercaseLetters);
 
 LowercaseLetterIndex lc1 = LowercaseLetterIndex::LetterH, lc2 = LowercaseLetterIndex::LetterJ;
 
@@ -94,41 +94,55 @@ std::cout << LowercaseLetters[lc1] << _LowercaseLetters[+(lc2 - LowercaseLetterI
 
 A few performance tests are defined in [`PerfTests.cpp`](./PerfTests.cpp) to test the difference between the various ways of using strong enums as well as comparisons to the old enum style.
 
-A sample output is provided below (built for release in x64). The only significant difference is the cost of using the EnumeratedArray wrapper, which is arguably worth the cost for better type safety and ease of use.
+A sample output is provided below (built for release in x64). The only significant difference is the cost of using the `(Const)EnumeratedArray` wrapper, which is arguably worth the cost for better type safety and ease of use.
 
 ```
 Performance times are relative to the control time.
 
 Iterating through all values 125000000 times using a for loop.
-Control array iteration:                          1.04314 seconds
+Control array iteration:                                  3.43118 seconds
 
-C Enum array iteration:                          0.187214 seconds
-Strong Enum array iteration with plus:           0.116744 seconds
-Strong Enum array iteration with static_cast:    0.12694 seconds
-Strong Enum EnumeratedArray iteration:           0.1457 seconds
-Strong Enum EnumeratedArray iteration with plus: 0.109763 seconds
+C Enum array iteration:                                   -0.0345791 seconds
+Strong Enum array iteration with plus:                    -0.0464779 seconds
+Strong Enum array iteration with static_cast:             -0.0965598 seconds
+Strong Enum ConstEnumeratedArray iteration:               -0.0754484 seconds
+Strong Enum ConstEnumeratedArray iteration with plus:     -0.113119 seconds
+Strong Enum EnumeratedArray iteration:                    -0.0419228 seconds
+Strong Enum EnumeratedArray iteration with plus:          -0.0711459 seconds
 
-Accessing array value 3000000000 times
-Control array access:                             0.792177 seconds
+Accessing array value 10000000000 times
+Control array access:                                     2.53659 seconds
 
-C Enum array access:                              0.394625 seconds
-Strong Enum array access with plus:               0.384614 seconds
-Strong Enum array access with static_cast:        0.386238 seconds
-Strong Enum EnumeratedArray access:               0.791405 seconds
-Strong Enum EnumeratedArray access with plus:     0.807286 seconds
+C Enum array access:                                      1.3495 seconds
+Strong Enum array access with plus:                       1.24766 seconds
+Strong Enum array access with static_cast:                1.23385 seconds
+Strong Enum ConstEnumeratedArray access:                  2.53109 seconds
+Strong Enum ConstEnumeratedArray access with plus:        2.54834 seconds
+Strong Enum EnumeratedArray access:                       2.49733 seconds
+Strong Enum EnumeratedArray access with plus:             2.48454 seconds
 
-Performing a set of bitwise operations 5000000000 times
-Control bitwise operations:                       1.32804 seconds
+Writing array value 10000000000 times
+Control array write:                              3.76519 seconds
 
-C Enum bitwise operations:                        -0.0149604 seconds
-Strong Enum bitwise operations:                   -0.0247599 seconds
-Mixing Strong Enum bitwise operations:            0.0166273 seconds
+C Enum array write:                               -1.22062 seconds
+Strong Enum array write with plus:                -1.17333 seconds
+Strong Enum array write with static_cast:         -1.1691 seconds
+Strong Enum EnumeratedArray access:               1.36074 seconds
+Strong Enum EnumeratedArray access with plus:     -0.0085171 seconds
+
+Performing a set of bitwise operations 12000000000 times
+Control bitwise operations:                       3.04814 seconds
+
+C Enum bitwise operations:                        0.0040691 seconds
+Strong Enum bitwise operations:                   0.0081172 seconds
+Mixing Strong Enum bitwise operations:            -0.0236986 seconds
 ```
 
 ## Changelog
 
 This project follows [Semantic Versioning 2](https://semver.org).
 
+- v2.0.0 (2020-08-21): Renamed EnumeratedArray to ConstEnumeratedArray and added EnumeratedArray class
 - v1.2.0 (2020-08-21): Added `*`, `/`, `*=`, `/=` operators to the arithmetic macros.
 - v1.1.0 (2020-08-21): Added license and readme.
 - v1.0.0 (2020-08-20): Initial release.

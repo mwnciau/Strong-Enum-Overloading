@@ -3,11 +3,11 @@
 #include "Macros.hpp"
 
 template <typename ValueType, typename Enumeration>
-class EnumeratedArray
+class ConstEnumeratedArray
 {
     const ValueType* _value;
 public:
-    EnumeratedArray(const ValueType* value)
+    ConstEnumeratedArray(const ValueType* value)
     {
         _value = value;
     }
@@ -15,7 +15,28 @@ public:
     {
         return _value[static_cast<size_t>(index)];
     }
+    // Ideally, this wouldn't be used as it removes the type protection of using strong enums
     inline const ValueType& operator[] (const size_t index) const
+    {
+        return _value[index];
+    }
+};
+
+template <typename ValueType, typename Enumeration>
+class EnumeratedArray
+{
+    ValueType* _value;
+public:
+    EnumeratedArray(ValueType* value)
+    {
+        _value = value;
+    }
+    inline ValueType& operator[] (const Enumeration& index) const
+    {
+        return _value[static_cast<size_t>(index)];
+    }
+    // Ideally, this wouldn't be used as it removes the type protection of using strong enums
+    inline ValueType& operator[] (const size_t index) const
     {
         return _value[index];
     }
@@ -224,4 +245,34 @@ static constexpr const char _UppercaseLetters[] = {
     'Y',
     'Z',
 };
-const EnumeratedArray<char, UppercaseLetterIndex> UppercaseLetters(_UppercaseLetters);
+const ConstEnumeratedArray<char, UppercaseLetterIndex> UppercaseLetters(_UppercaseLetters);
+
+static char _LowercaseLettersNonConst[] = {
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+};
+const EnumeratedArray<char, UppercaseLetterIndex> LowercaseLettersNonConst(_LowercaseLettersNonConst);

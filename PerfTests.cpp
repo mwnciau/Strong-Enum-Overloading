@@ -32,94 +32,128 @@ public:
 void iterateEnums()
 {
     Timer t;
-    volatile char c = 0;
     size_t loops = 125000000;
-
 
     std::cout << std::endl << "Iterating through all values " << loops << " times using a for loop." << std::endl;
 
-    volatile auto t0 = 0;
+
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (uint32_t i = t0; i < 26; ++i)
+        for (volatile uint32_t j = 0; j < 26;)
         {
-            c = 0;
+            auto k = j;
+            LowercaseLetters[k];
+            j = ++k;
         }
     }
     auto time = t.elapsed();
-    std::cout << "Control array iteration:                          " << t.elapsed() << " seconds" << std::endl << std::endl;
+    std::cout << "Control array iteration:                                  " << t.elapsed() << " seconds" << std::endl << std::endl;
 
-    c = 0;
-    volatile auto t1 = CEnumLowercaseLetterIndex::Init;
+
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (uint32_t i = t1; i < CEnumLowercaseLetterIndex::Count; ++i)
+        for (volatile uint32_t j = CEnumLowercaseLetterIndex::Init; j < CEnumLowercaseLetterIndex::Count;)
         {
-            c = LowercaseLetters[i];
+            auto k = j;
+            LowercaseLetters[k];
+            j = ++k;
         }
     }
-    std::cout << "C Enum array iteration:                          " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "C Enum array iteration:                                   " << t.elapsed() - time << " seconds" << std::endl;
 
-    c = 0;
-    volatile auto t2 = LowercaseLetterIndex::Init;
+
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (auto i = t2; i < LowercaseLetterIndex::Count; ++i)
+        for (volatile auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
         {
-            c = LowercaseLetters[+i];
+            auto k = j;
+            LowercaseLetters[+k];
+            j = ++k;
         }
     }
-    std::cout << "Strong Enum array iteration with plus:           " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum array iteration with plus:                    " << t.elapsed() - time << " seconds" << std::endl;
 
-    c = 0;
-    volatile auto t3 = LowercaseLetterIndex::Init;
+
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (auto i = t3; i < LowercaseLetterIndex::Count; ++i)
+        for (volatile auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
         {
-            c = LowercaseLetters[static_cast<uint32_t>(i)];
+            auto k = j;
+            LowercaseLetters[static_cast<uint32_t>(k)];
+            j = ++k;
         }
     }
-    std::cout << "Strong Enum array iteration with static_cast:    " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum array iteration with static_cast:             " << t.elapsed() - time << " seconds" << std::endl;
 
-    c = 0;
-    volatile auto t4 = UppercaseLetterIndex::Init;
+
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (auto i = t4; i < UppercaseLetterIndex::Count; ++i)
+        for (volatile auto j = UppercaseLetterIndex::Init; j < UppercaseLetterIndex::Count;)
         {
-            c = UppercaseLetters[i];
+            auto k = j;
+            UppercaseLetters[k];
+            j = ++k;
         }
     }
-    std::cout << "Strong Enum EnumeratedArray iteration:           " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum ConstEnumeratedArray iteration:               " << t.elapsed() - time << " seconds" << std::endl;
 
-    c = 0;
-    volatile auto t5 = UppercaseLetterIndex::Init;
+
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (auto i = t5; i < UppercaseLetterIndex::Count; ++i)
+        for (volatile auto j = UppercaseLetterIndex::Init; j < UppercaseLetterIndex::Count;)
         {
-            c = UppercaseLetters[+i];
+            auto k = j;
+            UppercaseLetters[+k];
+            j = ++k;
         }
     }
-    std::cout << "Strong Enum EnumeratedArray iteration with plus: " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum ConstEnumeratedArray iteration with plus:     " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    volatile auto t6 = UppercaseLetterIndex::Init;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        for (volatile auto j = t6; j < UppercaseLetterIndex::Count;)
+        {
+            auto k = j;
+            UppercaseLetters[i];
+            j = ++k;
+        }
+    }
+    std::cout << "Strong Enum EnumeratedArray iteration:                    " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    volatile auto t7 = UppercaseLetterIndex::Init;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        for (volatile auto j = t7; j < UppercaseLetterIndex::Count;)
+        {
+            auto k = j;
+            UppercaseLetters[+i];
+            j = ++k;
+        }
+    }
+    std::cout << "Strong Enum EnumeratedArray iteration with plus:          " << t.elapsed() - time << " seconds" << std::endl;
 }
 
 void arrayAccess()
 {
     Timer t;
-    volatile char c = 0;
-    size_t loops = 3000000000;
-
+    volatile char c;
+    size_t loops = 10000000000;
 
     std::cout << std::endl << "Accessing array value " << loops << " times" << std::endl;
 
+
+    c = 0;
     volatile auto _t0 = 0;
     t.reset();
     for (size_t i = 0; i < loops; ++i)
@@ -128,7 +162,8 @@ void arrayAccess()
         c = t0;
     }
     auto time = t.elapsed();
-    std::cout << "Control array access:                             " << t.elapsed() << " seconds" << std::endl << std::endl;
+    std::cout << "Control array access:                                     " << t.elapsed() << " seconds" << std::endl << std::endl;
+
 
     c = 0;
     volatile CEnumLowercaseLetterIndex _t1 = CEnumLowercaseLetterIndex::LetterA;
@@ -138,7 +173,8 @@ void arrayAccess()
         auto t1 = _t1;
         c = LowercaseLetters[t1];
     }
-    std::cout << "C Enum array access:                              " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "C Enum array access:                                      " << t.elapsed() - time << " seconds" << std::endl;
+
 
     c = 0;
     volatile LowercaseLetterIndex _t2 = LowercaseLetterIndex::LetterA;
@@ -148,7 +184,8 @@ void arrayAccess()
         auto t2 = _t2;
         c = LowercaseLetters[+t2];
     }
-    std::cout << "Strong Enum array access with plus:               " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum array access with plus:                       " << t.elapsed() - time << " seconds" << std::endl;
+
 
     c = 0;
     volatile LowercaseLetterIndex _t3 = LowercaseLetterIndex::LetterA;
@@ -158,7 +195,8 @@ void arrayAccess()
         auto t3 = _t3;
         c = LowercaseLetters[static_cast<uint32_t>(t3)];
     }
-    std::cout << "Strong Enum array access with static_cast:        " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum array access with static_cast:                " << t.elapsed() - time << " seconds" << std::endl;
+
 
     c = 0;
     volatile UppercaseLetterIndex _t4 = UppercaseLetterIndex::LetterA;
@@ -168,7 +206,8 @@ void arrayAccess()
         auto t4 = _t4;
         c = UppercaseLetters[t4];
     }
-    std::cout << "Strong Enum EnumeratedArray access:               " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum ConstEnumeratedArray access:                  " << t.elapsed() - time << " seconds" << std::endl;
+
 
     c = 0;
     volatile UppercaseLetterIndex _t5 = UppercaseLetterIndex::LetterA;
@@ -178,15 +217,97 @@ void arrayAccess()
         auto t5 = _t5;
         c = UppercaseLetters[+t5];
     }
-    std::cout << "Strong Enum EnumeratedArray access with plus:     " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum ConstEnumeratedArray access with plus:        " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    c = 0;
+    volatile UppercaseLetterIndex _t6 = UppercaseLetterIndex::LetterA;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        auto t4 = _t4;
+        c = LowercaseLettersNonConst[t4];
+    }
+    std::cout << "Strong Enum EnumeratedArray access:                       " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    c = 0;
+    volatile UppercaseLetterIndex _t7 = UppercaseLetterIndex::LetterA;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        auto t5 = _t5;
+        c = LowercaseLettersNonConst[+t5];
+    }
+    std::cout << "Strong Enum EnumeratedArray access with plus:             " << t.elapsed() - time << " seconds" << std::endl;
+}
+
+
+void arrayWrite()
+{
+    Timer t;
+    volatile char c = 'a';
+    size_t loops = 10000000000;
+
+    std::cout << std::endl << "Writing array value " << loops << " times" << std::endl;
+
+
+    volatile auto _t0 = 0;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        auto t0 = _t0;
+        _LowercaseLettersNonConst[0] = c;
+    }
+    auto time = t.elapsed();
+    std::cout << "Control array write:                                      " << t.elapsed() << " seconds" << std::endl << std::endl;
+
+
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        _LowercaseLettersNonConst[0] = c;
+    }
+    std::cout << "C Enum array write:                                       " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        _LowercaseLettersNonConst[+UppercaseLetterIndex::LetterA] = c;
+    }
+    std::cout << "Strong Enum array write with plus:                        " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        _LowercaseLettersNonConst[static_cast<uint32_t>(UppercaseLetterIndex::LetterA)] = c;
+    }
+    std::cout << "Strong Enum array write with static_cast:                 " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        LowercaseLettersNonConst[UppercaseLetterIndex::LetterA] = c;
+    }
+    std::cout << "Strong Enum EnumeratedArray write:                        " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        LowercaseLettersNonConst[+UppercaseLetterIndex::LetterA] = c;
+    }
+    std::cout << "Strong Enum EnumeratedArray write with plus:              " << t.elapsed() - time << " seconds" << std::endl;
 }
 
 void bitwiseOperations()
 {
     Timer t;
-    size_t loops = 5000000000;
-
     volatile char c = 0;
+    size_t loops = 12000000000;
 
     std::cout << std::endl << "Performing a set of bitwise operations " << loops << " times" << std::endl;
 
@@ -199,7 +320,8 @@ void bitwiseOperations()
         t0 = static_cast<uint32_t>(~(((t0 | 1) & 2) ^ 4));
     }
     auto time = t.elapsed();
-    std::cout << "Control bitwise operations:                       " << t.elapsed() << " seconds" << std::endl << std::endl;
+    std::cout << "Control bitwise operations:                               " << t.elapsed() << " seconds" << std::endl << std::endl;
+
 
     volatile CEnumFlagExample c1 = CEnumFlagExample::Null;
     t.reset();
@@ -209,7 +331,8 @@ void bitwiseOperations()
         CEnumFlagExample t1 = c1;
         t1 = static_cast<CEnumFlagExample>(~(((c1 | CEnumFlagExample::Flag1) & CEnumFlagExample::Flag2) ^ CEnumFlagExample::Flag4));
     }
-    std::cout << "C Enum bitwise operations:                        " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "C Enum bitwise operations:                                " << t.elapsed() - time << " seconds" << std::endl;
+
 
     volatile FlagExample c2 = FlagExample::Null;
     t.reset();
@@ -219,7 +342,8 @@ void bitwiseOperations()
         FlagExample t2 = c2;
         t2 = static_cast<FlagExample>(~(((t2 | FlagExample::Flag1) & FlagExample::Flag2) ^ FlagExample::Flag4));
     }
-    std::cout << "Strong Enum bitwise operations:                   " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum bitwise operations:                           " << t.elapsed() - time << " seconds" << std::endl;
+
 
     volatile FlagExample c3 = FlagExample::Null;
     t.reset();
@@ -229,5 +353,5 @@ void bitwiseOperations()
         FlagExample t3 = c3;
         t3 = static_cast<FlagExample>(~(((t3 | FlagExample2::Flag1) & FlagExample2::Flag2) ^ FlagExample2::Flag4));
     }
-    std::cout << "Mixing Strong Enum bitwise operations:            " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Mixing Strong Enum bitwise operations:                    " << t.elapsed() - time << " seconds" << std::endl;
 }

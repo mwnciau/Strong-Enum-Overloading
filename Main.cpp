@@ -74,8 +74,10 @@ int main()
 
     // Performance tests
     std::cout << std::endl << "Performance times are relative to the control time." << std::endl;
+
     iterateEnums();
     arrayAccess();
+    arrayWrite();
     bitwiseOperations();
 
     return 0;
