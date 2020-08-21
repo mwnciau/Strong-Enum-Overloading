@@ -28,12 +28,12 @@ Overloads the bitwise operators to allow `<OTHER>` to be on the rhs of the binar
 
 ##### `ENABLE_ENUM_ARITHMETIC_OPERATIONS(<ENUM>, <TYPE>)`
 
-Overloads the arithmetic operators for `<ENUM>`: `+`, `-`, `++`, `--`, `+=` and `-=`. Note that the comparison operations, `==`, `!=`, `>`, `<`, `>=` and `<=`, work without overloading.
+Overloads the arithmetic operators for `<ENUM>`: `+`, `-`, `*`, `/`, `++`, `--`, `+=`, `-=`, `*=` and `/=`. Note that the comparison operations, `==`, `!=`, `>`, `<`, `>=` and `<=`, work without overloading.
 
 
 ##### `ENABLE_ENUM_ARITHMETIC_COMPATIBILITY(<ENUM>, <OTHER>, <TYPE>)`
 
-Overloads the arithmetic operators to allow `<OTHER>` to be on the rhs of the arithmetic operators: `+`, `-`, `+=` and `-=`. Additionally, the comparison operators are defined between the two types: `==`, `!=`, `>`, `<`, `>=` and `<=`.
+Overloads the arithmetic operators to allow `<OTHER>` to be on the rhs of the arithmetic operators: `+`, `-`, `*`, `/`, `+=`, `-=`, `*=` and `/=`. Additionally, the comparison operators are defined between the two types: `==`, `!=`, `>`, `<`, `>=` and `<=`.
 
 `<OTHER>` can be another strong enum, or it could be a type compatible with `<TYPE>`.
 
@@ -129,8 +129,9 @@ Mixing Strong Enum bitwise operations:            0.0166273 seconds
 
 This project follows [Semantic Versioning 2](https://semver.org).
 
+- v1.2.0 (2020-08-21): Added `*`, `/`, `*=`, `/=` operators to the arithmetic macros.
 - v1.1.0 (2020-08-21): Added license and readme.
-- v1.0.0 (2020-08-20): Initial release
+- v1.0.0 (2020-08-20): Initial release.
 
 ## License
 

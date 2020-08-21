@@ -97,6 +97,14 @@ inline E operator - (const E& lhs, const E& rhs)                        \
 {                                                                       \
     return static_cast<E>(static_cast<T>(lhs) - static_cast<T>(rhs));   \
 }                                                                       \
+inline E operator * (const E& lhs, const E& rhs)                        \
+{                                                                       \
+    return static_cast<E>(static_cast<T>(lhs) * static_cast<T>(rhs));   \
+}                                                                       \
+inline E operator / (const E& lhs, const E& rhs)                        \
+{                                                                       \
+    return static_cast<E>(static_cast<T>(lhs) / static_cast<T>(rhs));   \
+}                                                                       \
 inline E& operator ++ (E& lhs)                                          \
 {                                                                       \
     return lhs = static_cast<E>(static_cast<T>(lhs) + 1);               \
@@ -124,6 +132,14 @@ inline E& operator += (E& lhs, const E rhs)                             \
 inline E& operator -= (E& lhs, const E rhs)                             \
 {                                                                       \
     return lhs = lhs - rhs;                                             \
+}                                                                       \
+inline E& operator *= (E& lhs, const E rhs)                             \
+{                                                                       \
+    return lhs = lhs * rhs;                                             \
+}                                                                       \
+inline E& operator /= (E& lhs, const E rhs)                             \
+{                                                                       \
+    return lhs = lhs / rhs;                                             \
 }
 
 #define ENABLE_ENUM_ARITHMETIC_COMPATIBILITY(E, E2, T)                  \
@@ -134,6 +150,14 @@ inline E operator + (const E& lhs, const E2& rhs)                       \
 inline E operator - (const E& lhs, const E2& rhs)                       \
 {                                                                       \
     return static_cast<E>(static_cast<T>(lhs) - static_cast<T>(rhs));   \
+}                                                                       \
+inline E operator * (const E& lhs, const E2& rhs)                       \
+{                                                                       \
+    return static_cast<E>(static_cast<T>(lhs) * static_cast<T>(rhs));   \
+}                                                                       \
+inline E operator / (const E& lhs, const E2& rhs)                       \
+{                                                                       \
+    return static_cast<E>(static_cast<T>(lhs) / static_cast<T>(rhs));   \
 }                                                                       \
 inline bool operator > (const E& lhs, const E2& rhs)                    \
 {                                                                       \
@@ -166,4 +190,12 @@ inline E& operator += (E& lhs, const E2 rhs)                            \
 inline E& operator -= (E& lhs, const E2 rhs)                            \
 {                                                                       \
     return lhs = lhs - rhs;                                             \
+}                                                                       \
+inline E& operator *= (E& lhs, const E2 rhs)                            \
+{                                                                       \
+    return lhs = lhs * rhs;                                             \
+}                                                                       \
+inline E& operator /= (E& lhs, const E2 rhs)                            \
+{                                                                       \
+    return lhs = lhs / rhs;                                             \
 }
