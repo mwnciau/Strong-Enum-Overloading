@@ -4,6 +4,8 @@
 #include "PerfTests.hpp"
 #include "Enums.hpp"
 
+#define TEST_TIME 10ull;
+
 class Timer
 {
 private:
@@ -32,7 +34,7 @@ public:
 void iterateEnums()
 {
     Timer t;
-    size_t loops = 125000000;
+    size_t loops = 40000000ull * TEST_TIME;
 
     std::cout << std::endl << "Iterating through all values " << loops << " times using a for loop." << std::endl;
 
@@ -48,7 +50,7 @@ void iterateEnums()
         }
     }
     auto time = t.elapsed();
-    std::cout << "Control array iteration:                                  " << t.elapsed() << " seconds" << std::endl << std::endl;
+    std::cout << "Control array iteration:                                  " << time << " seconds" << std::endl << std::endl;
 
 
     t.reset();
@@ -148,7 +150,7 @@ void arrayAccess()
 {
     Timer t;
     volatile char c;
-    size_t loops = 10000000000;
+    size_t loops = 2600000000ull * TEST_TIME;
 
     std::cout << std::endl << "Accessing array value " << loops << " times" << std::endl;
 
@@ -159,10 +161,10 @@ void arrayAccess()
     for (size_t i = 0; i < loops; ++i)
     {
         auto t0 = _t0;
-        c = t0;
+        c = LowercaseLetters[t0];
     }
     auto time = t.elapsed();
-    std::cout << "Control array access:                                     " << t.elapsed() << " seconds" << std::endl << std::endl;
+    std::cout << "Control array access:                                     " << time << " seconds" << std::endl << std::endl;
 
 
     c = 0;
@@ -247,20 +249,18 @@ void arrayWrite()
 {
     Timer t;
     volatile char c = 'a';
-    size_t loops = 10000000000;
+    size_t loops = 4000000000ull * TEST_TIME;
 
     std::cout << std::endl << "Writing array value " << loops << " times" << std::endl;
 
 
-    volatile auto _t0 = 0;
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        auto t0 = _t0;
         _LowercaseLettersNonConst[0] = c;
     }
     auto time = t.elapsed();
-    std::cout << "Control array write:                                      " << t.elapsed() << " seconds" << std::endl << std::endl;
+    std::cout << "Control array write:                                      " << time << " seconds" << std::endl << std::endl;
 
 
     t.reset();
@@ -307,7 +307,7 @@ void bitwiseOperations()
 {
     Timer t;
     volatile char c = 0;
-    size_t loops = 12000000000;
+    size_t loops = 4000000000ull * TEST_TIME;
 
     std::cout << std::endl << "Performing a set of bitwise operations " << loops << " times" << std::endl;
 
@@ -320,7 +320,7 @@ void bitwiseOperations()
         t0 = static_cast<uint32_t>(~(((t0 | 1) & 2) ^ 4));
     }
     auto time = t.elapsed();
-    std::cout << "Control bitwise operations:                               " << t.elapsed() << " seconds" << std::endl << std::endl;
+    std::cout << "Control bitwise operations:                               " << time << " seconds" << std::endl << std::endl;
 
 
     volatile CEnumFlagExample c1 = CEnumFlagExample::Null;
