@@ -83,7 +83,7 @@ inline E& operator ^= (E& lhs, const E2 rhs)                            \
 }
 
 #define ENABLE_ENUM_PLUS_SHORTCUT(E, T)                                 \
-inline T operator + (const E& lhs)                                      \
+constexpr inline T operator + (const E& lhs)                            \
 {                                                                       \
     return static_cast<T>(lhs);                                         \
 }
@@ -112,7 +112,7 @@ inline E& operator ++ (E& lhs)                                          \
 inline E operator ++ (E& lhs, int)                                      \
 {                                                                       \
     E result = lhs;                                                     \
-    ++result;                                                           \
+    ++lhs;                                                              \
     return result;                                                      \
 }                                                                       \
 inline E& operator -- (E& lhs)                                          \
@@ -122,7 +122,7 @@ inline E& operator -- (E& lhs)                                          \
 inline E operator -- (E& lhs, int)                                      \
 {                                                                       \
     E result = lhs;                                                     \
-    --result;                                                           \
+    --lhs;                                                              \
     return result;                                                      \
 }                                                                       \
 inline E& operator += (E& lhs, const E rhs)                             \

@@ -147,6 +147,9 @@ Mixing Strong Enum bitwise operations:                    -0.0483374 seconds
 
 This project follows [Semantic Versioning 2](https://semver.org).
 
+- v2.1.1 (2020-08-22):
+  - Fix postfix arithmetic ++ incrementing wrong value
+  - Plus shortcut now returns constexpr
 - v2.1.0 (2020-08-22): Improvements to tests
   - Added tests for constexprs in a namespace for comparison
   - Fixed a few small bugs in the tests
