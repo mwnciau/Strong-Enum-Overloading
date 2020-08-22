@@ -77,7 +77,7 @@ int main()
 
     iterateEnums();
     arrayAccess();
-    arrayWrite();
+    arrayCache();
     bitwiseOperations();
 
     return 0;

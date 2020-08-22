@@ -275,4 +275,36 @@ static char _LowercaseLettersNonConst[] = {
     'y',
     'z',
 };
-const EnumeratedArray<char, UppercaseLetterIndex> LowercaseLettersNonConst(_LowercaseLettersNonConst);
+const EnumeratedArray<char, LowercaseLetterIndex> LowercaseLettersNonConst(_LowercaseLettersNonConst);
+
+namespace ConstexprLowercaseLetterIndex
+{
+    constexpr uint32_t Init = 0;
+    constexpr uint32_t LetterA = 0;
+    constexpr uint32_t LetterB = 1;
+    constexpr uint32_t LetterC = 2;
+    constexpr uint32_t LetterD = 3;
+    constexpr uint32_t LetterE = 4;
+    constexpr uint32_t LetterF = 5;
+    constexpr uint32_t LetterG = 6;
+    constexpr uint32_t LetterH = 7;
+    constexpr uint32_t LetterI = 8;
+    constexpr uint32_t LetterJ = 9;
+    constexpr uint32_t LetterK = 10;
+    constexpr uint32_t LetterL = 11;
+    constexpr uint32_t LetterM = 12;
+    constexpr uint32_t LetterN = 13;
+    constexpr uint32_t LetterO = 14;
+    constexpr uint32_t LetterP = 15;
+    constexpr uint32_t LetterQ = 16;
+    constexpr uint32_t LetterR = 17;
+    constexpr uint32_t LetterS = 18;
+    constexpr uint32_t LetterT = 19;
+    constexpr uint32_t LetterU = 20;
+    constexpr uint32_t LetterV = 21;
+    constexpr uint32_t LetterW = 22;
+    constexpr uint32_t LetterX = 23;
+    constexpr uint32_t LetterY = 24;
+    constexpr uint32_t LetterZ = 25;
+    constexpr uint32_t Count = 26;
+};

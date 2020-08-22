@@ -100,48 +100,58 @@ A sample output is provided below (built for release in x64). The only significa
 Performance times are relative to the control time.
 
 Iterating through all values 400000000 times using a for loop.
-Control array iteration:                                  10.7426 seconds
+Control array iteration:                                  10.5178 seconds
 
-C Enum array iteration:                                   0.252712 seconds
-Strong Enum array iteration with plus:                    -0.0314223 seconds
-Strong Enum array iteration with static_cast:             -0.183256 seconds
-Strong Enum ConstEnumeratedArray iteration:               -0.172771 seconds
-Strong Enum ConstEnumeratedArray iteration with plus:     -0.194378 seconds
-Strong Enum EnumeratedArray iteration:                    -0.0075654 seconds
-Strong Enum EnumeratedArray iteration with plus:          -0.0806227 seconds
+C Enum array iteration:                                   0.379651 seconds
+Constexpr array iteration:                                -0.0597379 seconds
+Strong Enum array iteration with plus:                    -0.0263624 seconds
+Strong Enum array iteration with static_cast:             -5.78e-05 seconds
+Strong Enum ConstEnumeratedArray iteration:               -0.0690977 seconds
+Strong Enum ConstEnumeratedArray iteration with plus:     -0.0292257 seconds
+Strong Enum EnumeratedArray iteration:                    0.0892457 seconds
+Strong Enum EnumeratedArray iteration with plus:          0.0997919 seconds
 
 Accessing array value 26000000000 times
-Control array access:                                     9.88202 seconds
+Control array access:                                     9.72461 seconds
 
-C Enum array access:                                      3.28631 seconds
-Strong Enum array access with plus:                       3.27055 seconds
-Strong Enum array access with static_cast:                3.19699 seconds
-Strong Enum ConstEnumeratedArray access:                  3.22026 seconds
-Strong Enum ConstEnumeratedArray access with plus:        3.28473 seconds
-Strong Enum EnumeratedArray access:                       3.39409 seconds
-Strong Enum EnumeratedArray access with plus:             3.31091 seconds
+C Enum array access:                                      -0.0442217 seconds
+Constexpr array access:                                   0.0653823 seconds
+Strong Enum array access with plus:                       -0.0385344 seconds
+Strong Enum array access with static_cast:                -0.0038927 seconds
+Strong Enum ConstEnumeratedArray access:                  3.3729 seconds
+Strong Enum ConstEnumeratedArray access with plus:        3.24505 seconds
+Strong Enum EnumeratedArray access:                       3.1717 seconds
+Strong Enum EnumeratedArray access with plus:             3.27032 seconds
 
-Writing array value 40000000000 times
-Control array write:                                      10.1319 seconds
+Cached array access 40000000000 times
+Control cached array access:                              10.0494 seconds
 
-C Enum array write:                                       -0.0303196 seconds
-Strong Enum array write with plus:                        10.2083 seconds
-Strong Enum array write with static_cast:                 -0.0013018 seconds
-Strong Enum EnumeratedArray write:                        4.88098 seconds
-Strong Enum EnumeratedArray write with plus:              4.89207 seconds
+C Enum cached array access:                               -0.179094 seconds
+Constexpr cached array access:                            -0.09004 seconds
+Strong Enum cached array access with plus:                -0.161288 seconds
+Strong Enum cached array access with static_cast:         -0.200125 seconds
+Strong Enum ConstEnumeratedArray cached access:           -0.0983546 seconds
+Strong Enum ConstEnumeratedArray cached access with plus: -0.0874335 seconds
+Strong Enum EnumeratedArray cached access:                -0.100658 seconds
+Strong Enum EnumeratedArray cached access with plus:      -0.121259 seconds
 
 Performing a set of bitwise operations 40000000000 times
-Control bitwise operations:                               10.0219 seconds
+Control bitwise operations:                               9.92931 seconds
 
-C Enum bitwise operations:                                0.189034 seconds
-Strong Enum bitwise operations:                           0.132944 seconds
-Mixing Strong Enum bitwise operations:                    0.0073264 seconds
+C Enum bitwise operations:                                0.0632682 seconds
+Strong Enum bitwise operations:                           0.13528 seconds
+Mixing Strong Enum bitwise operations:                    -0.0483374 seconds
 ```
 
 ## Changelog
 
 This project follows [Semantic Versioning 2](https://semver.org).
 
+- v2.1.0 (2020-08-22): Improvements to tests
+  - Added tests for constexprs in a namespace for comparison
+  - Fixed a few small bugs in the tests
+  - Changed arrayWrite test to arrayCache due to similarity to arrayAccess
+  - Added descriptions to the tests
 - v2.0.1 (2020-08-21): Minor adjustments to tests
 - v2.0.0 (2020-08-21): Renamed EnumeratedArray to ConstEnumeratedArray and added EnumeratedArray class
 - v1.2.0 (2020-08-21): Added `*`, `/`, `*=`, `/=` operators to the arithmetic macros.
