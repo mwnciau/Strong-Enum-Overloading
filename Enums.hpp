@@ -1,7 +1,27 @@
 #pragma once
 
+#include "Classes.hpp"
 #include "Macros.hpp"
 
+template <typename ValueType, typename Enumeration>
+class ConstClassEnumeratedArray
+{
+    const ValueType* _value;
+public:
+    ConstClassEnumeratedArray(const ValueType* value)
+    {
+        _value = value;
+    }
+    inline const ValueType& operator[] (const IndexEnum<Enumeration>& index) const
+    {
+        return _value[+index];
+    }
+    // Ideally, this wouldn't be used as it removes the type protection of using strong enums
+    inline const ValueType& operator[] (const size_t index) const
+    {
+        return _value[index];
+    }
+};
 template <typename ValueType, typename Enumeration>
 class ConstEnumeratedArray
 {
@@ -308,3 +328,48 @@ namespace ConstexprLowercaseLetterIndex
     constexpr uint32_t LetterZ = 25;
     constexpr uint32_t Count = 26;
 };
+
+enum class ClassFlagExample : uint32_t
+{
+    Null = 0,
+    Flag1 = 1,
+    Flag2 = 2,
+    Flag4 = 4,
+    Flag8 = 8,
+    Flag16 = 16
+};
+using ClassFlagExample_t = FlagEnum<ClassFlagExample>;
+
+enum class ClassUppercaseLetterIndex : uint32_t
+{
+    Init,
+    LetterA = 0,
+    LetterB,
+    LetterC,
+    LetterD,
+    LetterE,
+    LetterF,
+    LetterG,
+    LetterH,
+    LetterI,
+    LetterJ,
+    LetterK,
+    LetterL,
+    LetterM,
+    LetterN,
+    LetterO,
+    LetterP,
+    LetterQ,
+    LetterR,
+    LetterS,
+    LetterT,
+    LetterU,
+    LetterV,
+    LetterW,
+    LetterX,
+    LetterY,
+    LetterZ,
+    Count
+};
+using ClassUppercaseLetterIndex_t = IndexEnum<ClassUppercaseLetterIndex>;
+const ConstClassEnumeratedArray<char, ClassUppercaseLetterIndex> ClassUppercaseLetters(_UppercaseLetters);

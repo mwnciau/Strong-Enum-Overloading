@@ -4,7 +4,7 @@
 #include "PerfTests.hpp"
 #include "Enums.hpp"
 
-#define TEST_TIME 10ull;
+#define TEST_TIME 1ull;
 
 class Timer
 {
@@ -42,9 +42,10 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (volatile uint32_t j = 0; j < 26;)
+        for (uint32_t j = 0; j < 26;)
         {
-            auto k = j;
+            volatile auto _k = j;
+            auto k = _k;
             LowercaseLetters[k];
             j = ++k;
         }
@@ -56,9 +57,10 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (volatile uint32_t j = CEnumLowercaseLetterIndex::Init; j < CEnumLowercaseLetterIndex::Count;)
+        for (uint32_t j = CEnumLowercaseLetterIndex::Init; j < CEnumLowercaseLetterIndex::Count;)
         {
-            auto k = j;
+            volatile auto _k = j;
+            auto k = _k;
             LowercaseLetters[k];
             j = ++k;
         }
@@ -69,9 +71,10 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (volatile uint32_t j = ConstexprLowercaseLetterIndex::Init; j < ConstexprLowercaseLetterIndex::Count;)
+        for (uint32_t j = ConstexprLowercaseLetterIndex::Init; j < ConstexprLowercaseLetterIndex::Count;)
         {
-            auto k = j;
+            volatile auto _k = j;
+            auto k = _k;
             LowercaseLetters[k];
             j = ++k;
         }
@@ -82,9 +85,10 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (volatile auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
+        for (auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
         {
-            auto k = j;
+            volatile auto _k = j;
+            auto k = _k;
             LowercaseLetters[+k];
             j = ++k;
         }
@@ -95,9 +99,10 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (volatile auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
+        for (auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
         {
-            auto k = j;
+            volatile auto _k = j;
+            auto k = _k;
             LowercaseLetters[static_cast<uint32_t>(k)];
             j = ++k;
         }
@@ -108,9 +113,10 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (volatile auto j = UppercaseLetterIndex::Init; j < UppercaseLetterIndex::Count;)
+        for (auto j = UppercaseLetterIndex::Init; j < UppercaseLetterIndex::Count;)
         {
-            auto k = j;
+            volatile auto _k = j;
+            auto k = _k;
             UppercaseLetters[k];
             j = ++k;
         }
@@ -121,9 +127,10 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (volatile auto j = UppercaseLetterIndex::Init; j < UppercaseLetterIndex::Count;)
+        for (auto j = UppercaseLetterIndex::Init; j < UppercaseLetterIndex::Count;)
         {
-            auto k = j;
+            volatile auto _k = j;
+            auto k = _k;
             UppercaseLetters[+k];
             j = ++k;
         }
@@ -134,10 +141,11 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (volatile auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
+        for (auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
         {
-            auto k = j;
-            LowercaseLettersNonConst[i];
+            volatile auto _k = j;
+            auto k = _k;
+            LowercaseLettersNonConst[k];
             j = ++k;
         }
     }
@@ -147,14 +155,29 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (volatile auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
+        for (auto j = LowercaseLetterIndex::Init; j < LowercaseLetterIndex::Count;)
         {
-            auto k = j;
-            LowercaseLettersNonConst[+i];
+            volatile auto _k = j;
+            auto k = _k;
+            ClassUppercaseLetters[+k];
             j = ++k;
         }
     }
-    std::cout << "Strong Enum EnumeratedArray iteration with plus:          " << t.elapsed() - time << " seconds" << std::endl;/**/
+    std::cout << "Strong Enum EnumeratedArray iteration with plus:          " << t.elapsed() - time << " seconds" << std::endl;
+
+    
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        for (ClassUppercaseLetterIndex_t j = ClassUppercaseLetterIndex::Init; j < ClassUppercaseLetterIndex::Count;)
+        {
+            volatile auto _k = +j;
+            auto k = ClassUppercaseLetterIndex_t(static_cast<ClassUppercaseLetterIndex>(_k));
+            ClassUppercaseLetters[+k];
+            j = ++k;
+        }
+    }
+    std::cout << "IndexEnum  EnumeratedArray iteration with plus:           " << t.elapsed() - time << " seconds" << std::endl;
 }
 
 void arrayAccess()
@@ -264,6 +287,39 @@ void arrayAccess()
         c = LowercaseLettersNonConst[+t8];
     }
     std::cout << "Strong Enum EnumeratedArray access with plus:             " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    c = 0;
+    volatile uint32_t _t9 = 0;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        auto t9 = ClassUppercaseLetterIndex_t(static_cast<ClassUppercaseLetterIndex>(_t9));
+        c = ClassUppercaseLetters[t9];
+    }
+    std::cout << "Strong Enum ClassEnumeratedArray access:                  " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    c = 0;
+    volatile uint32_t _t10 = 0;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        auto t10 = ClassUppercaseLetterIndex_t(static_cast<ClassUppercaseLetterIndex>(_t10));
+        c = ClassUppercaseLetters[+t10];
+    }
+    std::cout << "IndexEnum EnumeratedArray access with plus:               " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    c = 0;
+    volatile uint32_t _t11 = 0;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        auto t11 = ClassUppercaseLetterIndex_t(static_cast<ClassUppercaseLetterIndex>(_t11));
+        c = _UppercaseLetters[+t11];
+    }
+    std::cout << "IndexEnum array access with plus:                         " << t.elapsed() - time << " seconds" << std::endl;
 }
 
 
@@ -386,7 +442,7 @@ void bitwiseOperations()
     {
         // prevent caching of the result
         FlagExample t2 = c2;
-        t2 = static_cast<FlagExample>(~(((t2 | FlagExample::Flag1) & FlagExample::Flag2) ^ FlagExample::Flag4));
+        t2 = ~(((t2 | FlagExample::Flag1) & FlagExample::Flag2) ^ FlagExample::Flag4);
     }
     std::cout << "Strong Enum bitwise operations:                           " << t.elapsed() - time << " seconds" << std::endl;
 
@@ -397,7 +453,18 @@ void bitwiseOperations()
     {
         // prevent caching of the result
         FlagExample t3 = c3;
-        t3 = static_cast<FlagExample>(~(((t3 | FlagExample2::Flag1) & FlagExample2::Flag2) ^ FlagExample2::Flag4));
+        t3 = ~(((t3 | FlagExample2::Flag1) & FlagExample2::Flag2) ^ FlagExample2::Flag4);
     }
     std::cout << "Mixing Strong Enum bitwise operations:                    " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    volatile auto c4 = 0;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        // prevent caching of the result
+        ClassFlagExample_t t4 = static_cast<ClassFlagExample>(c4);
+        t4 = ~(((t4 | ClassFlagExample::Flag1) & ClassFlagExample::Flag2) ^ ClassFlagExample::Flag4);
+    }
+    std::cout << "FlagEnum bitwise operations:                              " << t.elapsed() - time << " seconds" << std::endl;
 }
