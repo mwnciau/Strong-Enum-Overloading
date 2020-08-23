@@ -20,7 +20,7 @@ int main()
     // - !e returns e == ENUM::Null
     std::cout << "test numerical value: " << +test << std::endl;
     std::cout << "test boolean value: " << !!test << std::endl;
-
+    
     // Using: ENABLE_ENUM_BITWISE_COMPATIBILITY(FlagExample2, uint32_t, uint32_t);
     // We have enabled bitwise compatibility between FlagExample2 and uint32_t so we are allowed to do this:
     // (Note that the reverse is not possible in this demo because we have not enabled it)

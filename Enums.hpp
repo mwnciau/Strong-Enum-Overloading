@@ -78,9 +78,9 @@ enum class FlagExample : uint32_t
     Flag8 = 8,
     Flag16 = 16
 };
-ENABLE_ENUM_BITWISE_OPERATORS(FlagExample, uint32_t);
-ENABLE_ENUM_BITWISE_COMPATIBILITY(FlagExample, FlagExample2, uint32_t);
-ENABLE_ENUM_PLUS_SHORTCUT(FlagExample, uint32_t);
+#define ENABLE_ENUM_FLAG FlagExample
+#define ENABLE_ENUM_FLAG_OTHER FlagExample2
+#include "Enum.hxx"
 
 enum CEnumFlagExample : uint32_t
 {
@@ -101,9 +101,9 @@ enum class FlagExample2 : uint32_t
     Flag8 = 8,
     Flag16 = 16
 };
-ENABLE_ENUM_BITWISE_OPERATORS(FlagExample2, uint32_t);
-ENABLE_ENUM_BITWISE_COMPATIBILITY(FlagExample2, uint32_t, uint32_t);
-ENABLE_ENUM_PLUS_SHORTCUT(FlagExample2, uint32_t);
+#define ENABLE_ENUM_FLAG FlagExample2
+#define ENABLE_ENUM_FLAG_OTHER uint32_t
+#include "Enum.hxx"
 
 enum class LowercaseLetterIndex : uint32_t
 {
@@ -136,9 +136,9 @@ enum class LowercaseLetterIndex : uint32_t
     LetterZ,
     Count
 };
-ENABLE_ENUM_ARITHMETIC_OPERATIONS(LowercaseLetterIndex, uint32_t);
-ENABLE_ENUM_ARITHMETIC_COMPATIBILITY(LowercaseLetterIndex, UppercaseLetterIndex, uint32_t);
-ENABLE_ENUM_PLUS_SHORTCUT(LowercaseLetterIndex, uint32_t);
+#define ENABLE_ENUM_INDEX LowercaseLetterIndex
+#define ENABLE_ENUM_INDEX_OTHER UppercaseLetterIndex
+#include "Enum.hxx"
 
 enum CEnumLowercaseLetterIndex : uint32_t
 {
@@ -233,9 +233,9 @@ enum class UppercaseLetterIndex : uint32_t
     LetterZ,
     Count
 };
-ENABLE_ENUM_ARITHMETIC_OPERATIONS(UppercaseLetterIndex, uint32_t);
-ENABLE_ENUM_ARITHMETIC_COMPATIBILITY(UppercaseLetterIndex, uint32_t, uint32_t);
-ENABLE_ENUM_PLUS_SHORTCUT(UppercaseLetterIndex, uint32_t);
+#define ENABLE_ENUM_INDEX UppercaseLetterIndex
+#define ENABLE_ENUM_INDEX_OTHER uint32_t
+#include "Enum.hxx"
 
 static constexpr const char _UppercaseLetters[] = {
     'A',
