@@ -4,7 +4,7 @@
 #include "PerfTests.hpp"
 #include "Enums.hpp"
 
-#define TEST_TIME 1ull;
+#define TEST_TIME 2ull;
 
 class Timer
 {
@@ -178,6 +178,19 @@ void iterateEnums()
         }
     }
     std::cout << "IndexEnum  EnumeratedArray iteration with plus:           " << t.elapsed() - time << " seconds" << std::endl;
+
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        for (CRTPUppercaseLetterIndex::Type j = CRTPUppercaseLetterIndex::Init; j < CRTPUppercaseLetterIndex::Count;)
+        {
+            volatile auto _k = j;
+            auto k = CRTPUppercaseLetterIndex::Type(_k);
+            ClassUppercaseLetters[+k];
+            j = ++k;
+        }
+    }
+    std::cout << "CRTPIndexEnum iteration with plus:                        " << t.elapsed() - time << " seconds" << std::endl;
 }
 
 void arrayAccess()
@@ -320,6 +333,17 @@ void arrayAccess()
         c = _UppercaseLetters[+t11];
     }
     std::cout << "IndexEnum array access with plus:                         " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    c = 0;
+    volatile auto _t12 = CRTPUppercaseLetterIndex::Init;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        auto t12 = _t12;
+        c = _UppercaseLetters[+t12];
+    }
+    std::cout << "CRTPIndexEnum array access with plus:                     " << t.elapsed() - time << " seconds" << std::endl;
 }
 
 
@@ -373,7 +397,7 @@ void arrayCache()
     std::cout << "Strong Enum cached array access with static_cast:         " << t.elapsed() - time << " seconds" << std::endl;
 
 
-    t.reset();
+    /*t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
         c = UppercaseLetters[UppercaseLetterIndex::LetterA];
@@ -402,7 +426,14 @@ void arrayCache()
     {
         c = LowercaseLettersNonConst[+LowercaseLetterIndex::LetterA];
     }
-    std::cout << "Strong Enum EnumeratedArray cached access with plus:      " << t.elapsed() - time << " seconds" << std::endl;
+    std::cout << "Strong Enum EnumeratedArray cached access with plus:      " << t.elapsed() - time << " seconds" << std::endl;*/
+
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        c = _UppercaseLetters[+CRTPUppercaseLetterIndex::LetterA];
+    }
+    std::cout << "CRTPIndexEnum cached array access with plus:              " << t.elapsed() - time << " seconds" << std::endl;
 }
 
 void bitwiseOperations()
@@ -467,4 +498,15 @@ void bitwiseOperations()
         t4 = ~(((t4 | ClassFlagExample::Flag1) & ClassFlagExample::Flag2) ^ ClassFlagExample::Flag4);
     }
     std::cout << "FlagEnum bitwise operations:                              " << t.elapsed() - time << " seconds" << std::endl;
+
+
+    volatile auto c5 = CRTPFlagExample::Null;
+    t.reset();
+    for (size_t i = 0; i < loops; ++i)
+    {
+        // prevent caching of the result
+        CRTPFlagExample::Type t5(c5);
+        t5 = ~(((t5 | CRTPFlagExample::Flag1) & CRTPFlagExample::Flag2) ^ CRTPFlagExample::Flag4);
+    }
+    std::cout << "CRTP IndexEnum bitwise operations:                        " << t.elapsed() - time << " seconds" << std::endl;
 }

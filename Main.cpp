@@ -3,6 +3,7 @@
 #include "Enums.hpp"
 #include "PerfTests.hpp"
 
+#include "CRTPClasses.hpp"
 int main()
 {
     // Using: ENABLE_ENUM_BITWISE_OPERATIONS(LowercaseLetterIndex, uint32_t);
