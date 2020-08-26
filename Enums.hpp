@@ -374,64 +374,6 @@ enum class ClassUppercaseLetterIndex : uint32_t
 using ClassUppercaseLetterIndex_t = IndexEnum<ClassUppercaseLetterIndex>;
 const ConstClassEnumeratedArray<char, ClassUppercaseLetterIndex> ClassUppercaseLetters(_UppercaseLetters);
 
-struct CRTPUppercaseLetterIndex
-{
-    using Type = CRTPIndexEnum<CRTPUppercaseLetterIndex, uint32_t>;
-
-    static constexpr Type Init    = { 0 };
-    static constexpr Type LetterA = { 0 };
-    static constexpr Type LetterB = { 1 };
-    static constexpr Type LetterC = { 2 };
-    static constexpr Type LetterD = { 3 };
-    static constexpr Type LetterE = { 4 };
-    static constexpr Type LetterF = { 5 };
-    static constexpr Type LetterG = { 6 };
-    static constexpr Type LetterH = { 7 };
-    static constexpr Type LetterI = { 8 };
-    static constexpr Type LetterJ = { 9 };
-    static constexpr Type LetterK = { 10 };
-    static constexpr Type LetterL = { 11 };
-    static constexpr Type LetterM = { 12 };
-    static constexpr Type LetterN = { 13 };
-    static constexpr Type LetterO = { 14 };
-    static constexpr Type LetterP = { 15 };
-    static constexpr Type LetterQ = { 16 };
-    static constexpr Type LetterR = { 17 };
-    static constexpr Type LetterS = { 18 };
-    static constexpr Type LetterT = { 19 };
-    static constexpr Type LetterU = { 20 };
-    static constexpr Type LetterV = { 21 };
-    static constexpr Type LetterW = { 22 };
-    static constexpr Type LetterX = { 23 };
-    static constexpr Type LetterY = { 24 };
-    static constexpr Type LetterZ = { 25 };
-    static constexpr Type Count   = { 26 };
-
-    static constexpr Type FromUnderlying(volatile uint32_t _value)
-    {
-        uint32_t value = _value;
-        return Type(value);
-    }
-};
-
-struct CRTPFlagExample
-{
-    using Type = CRTPFlagEnum<CRTPFlagExample, uint32_t, CRTPUppercaseLetterIndex>;
-
-    static constexpr Type Null = { 0 };
-    static constexpr Type Flag1 = { 1 };
-    static constexpr Type Flag2 = { 2 };
-    static constexpr Type Flag4 = { 4 };
-    static constexpr Type Flag8 = { 8 };
-    static constexpr Type Flag16 = { 16 };
-
-    static constexpr Type FromUnderlying(volatile uint32_t _value)
-    {
-        uint32_t value = _value;
-        return Type(value);
-    }
-};
-
 struct CRTPUppercaseLetterIndex2
 {
     using Type = CRTPIndexEnum<CRTPUppercaseLetterIndex2, uint32_t, CRTPUppercaseLetterIndex>;
