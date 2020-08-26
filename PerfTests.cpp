@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "PerfTests.hpp"
+#include "Classes.hpp"
 #include "Enums.hpp"
 
 #define TEST_TIME 2ull;
@@ -169,10 +170,10 @@ void iterateEnums()
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        for (ClassUppercaseLetterIndex_t j = ClassUppercaseLetterIndex::Init; j < ClassUppercaseLetterIndex::Count;)
+        for (ClassUppercaseLetterIndex::Type j = ClassUppercaseLetterIndex::Init; j < ClassUppercaseLetterIndex::Count;)
         {
-            volatile auto _k = +j;
-            auto k = ClassUppercaseLetterIndex_t(static_cast<ClassUppercaseLetterIndex>(_k));
+            volatile auto _k = j;
+            auto k = ClassUppercaseLetterIndex::Type(_k);
             ClassUppercaseLetters[+k];
             j = ++k;
         }
@@ -303,33 +304,33 @@ void arrayAccess()
 
 
     c = 0;
-    volatile uint32_t _t9 = 0;
+    volatile auto _t9 = ClassUppercaseLetterIndex::Init;
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        auto t9 = ClassUppercaseLetterIndex_t(static_cast<ClassUppercaseLetterIndex>(_t9));
+        auto t9 = ClassUppercaseLetterIndex::Type(_t9);
         c = ClassUppercaseLetters[t9];
     }
     std::cout << "Strong Enum ClassEnumeratedArray access:                  " << t.elapsed() - time << " seconds" << std::endl;
 
 
     c = 0;
-    volatile uint32_t _t10 = 0;
+    volatile auto _t10 = ClassUppercaseLetterIndex::Init;
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        auto t10 = ClassUppercaseLetterIndex_t(static_cast<ClassUppercaseLetterIndex>(_t10));
+        auto t10 = ClassUppercaseLetterIndex::Type(_t10);
         c = ClassUppercaseLetters[+t10];
     }
     std::cout << "IndexEnum EnumeratedArray access with plus:               " << t.elapsed() - time << " seconds" << std::endl;
 
 
     c = 0;
-    volatile uint32_t _t11 = 0;
+    volatile auto _t11 = ClassUppercaseLetterIndex::Init;
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
-        auto t11 = ClassUppercaseLetterIndex_t(static_cast<ClassUppercaseLetterIndex>(_t11));
+        auto t11 = ClassUppercaseLetterIndex::Type(_t11);
         c = _UppercaseLetters[+t11];
     }
     std::cout << "IndexEnum array access with plus:                         " << t.elapsed() - time << " seconds" << std::endl;
@@ -489,12 +490,12 @@ void bitwiseOperations()
     std::cout << "Mixing Strong Enum bitwise operations:                    " << t.elapsed() - time << " seconds" << std::endl;
 
 
-    volatile auto c4 = 0;
+    volatile auto c4 = ClassFlagExample::Null;
     t.reset();
     for (size_t i = 0; i < loops; ++i)
     {
         // prevent caching of the result
-        ClassFlagExample_t t4 = static_cast<ClassFlagExample>(c4);
+        ClassFlagExample::Type t4(c4);
         t4 = ~(((t4 | ClassFlagExample::Flag1) & ClassFlagExample::Flag2) ^ ClassFlagExample::Flag4);
     }
     std::cout << "FlagEnum bitwise operations:                              " << t.elapsed() - time << " seconds" << std::endl;
